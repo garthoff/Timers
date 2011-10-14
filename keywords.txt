@@ -1,0 +1,23 @@
+#######################################
+# Syntax Coloring Map TimerPool
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+TimerPool	KEYWORD1
+LimitedTimerPool	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+connect	KEYWORD2
+setInterval	KEYWORD2
+update	KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
+NOP LITERAL1
