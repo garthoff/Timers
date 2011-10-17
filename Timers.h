@@ -1,4 +1,4 @@
-#include "WProgram.h"
+#include "Arduino.h"
 
 #ifndef timers_h
 #define timers_h
