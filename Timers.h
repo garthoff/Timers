@@ -17,7 +17,7 @@ class TimerPool
 	private:
 		timerFunc *funcs;
 		unsigned long *intervals;
-		unsigned long *next_times;
+		unsigned long *begin_times;
 		byte _size;
 		
 	public:
@@ -34,7 +34,7 @@ class LimitedTimerPool
 	private:
 		timerFunc funcs[STATIC_SIZE];
 		unsigned long intervals[STATIC_SIZE];
-		unsigned long next_times[STATIC_SIZE];
+		unsigned long begin_times[STATIC_SIZE];
 		
 	public:
 		LimitedTimerPool(void);
