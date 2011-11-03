@@ -12,12 +12,18 @@ typedef void (*timerFunc)(void);
 void NOP(void);
 
 
+struct TimerElement
+{
+	timerFunc func;
+	unsigned long interval;
+	unsigned long begin_time;
+};
+
+
 class TimerPool
 {
 	private:
-		timerFunc *funcs;
-		unsigned long *intervals;
-		unsigned long *begin_times;
+		struct TimerElement *_elements;
 		byte _size;
 		
 	public:
@@ -32,9 +38,7 @@ class TimerPool
 class LimitedTimerPool
 {
 	private:
-		timerFunc funcs[STATIC_SIZE];
-		unsigned long intervals[STATIC_SIZE];
-		unsigned long begin_times[STATIC_SIZE];
+		struct TimerElement _elements[STATIC_SIZE];
 		
 	public:
 		LimitedTimerPool(void);
