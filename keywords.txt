@@ -1,23 +1,24 @@
 #######################################
-# Syntax Coloring Map TimerPool
+# Syntax Coloring Map Timers
 #######################################
 
 #######################################
 # Datatypes (KEYWORD1)
 #######################################
 
-TimerPool	KEYWORD1
-LimitedTimerPool	KEYWORD1
+Timers	KEYWORD1
 
 #######################################
 # Methods and Functions (KEYWORD2)
 #######################################
-connect	KEYWORD2
+attach	KEYWORD2
 setInterval	KEYWORD2
-update	KEYWORD2
+process	KEYWORD2
 
 #######################################
 # Constants (LITERAL1)
 #######################################
 
 NOP LITERAL1
+TIMER_ITEMS LITERAL1
+

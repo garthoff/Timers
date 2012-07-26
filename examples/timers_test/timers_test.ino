@@ -1,3 +1,7 @@
+// Ilość elementow timera
+// musi byc podane przed include
+#define TIMER_ITEMS 2
+
 #include <Timers.h>
 #include <Servo.h>
 
@@ -5,7 +9,8 @@
 #define LED_PIN 13
 
 Servo servo;
-LimitedTimerPool timer; // Deklaracja obiektu timera z 2 slotami
+
+Timers timer; // ** Deklaracja obiektu timera z 2 slotami
 
 // * Obróć serwo o 1 stopień
 void servoMove()
@@ -27,14 +32,16 @@ void setup()
 {
   servo.attach(SERVO_PIN);
   pinMode(LED_PIN, OUTPUT);
+  
   // Podłączenie funkcji wywoływanej co 0,02 s
-  timer.connect(0, 20, servoMove);
+  timer.attach(0, 20, servoMove);
+  
   // Podłączenie funkcji wywoływanej co 0,5 s
-  timer.connect(1, 500, ledChange);
+  timer.attach(1, 500, ledChange);
 }
 
 void loop()
 {
   // Aktualizacja stanu timera
-  timer.update();
+  timer.process();
 }

@@ -1,10 +1,11 @@
-#include "WProgram.h"
+#include "Arduino.h"
 
 #ifndef timers_h
 #define timers_h
 
-#define STATIC_SIZE 8
-
+#ifndef TIMER_ITEMS
+#define TIMER_ITEMS 8
+#endif
 
 typedef void (*timerFunc)(void);
 
@@ -20,31 +21,16 @@ struct TimerElement
 };
 
 
-class TimerPool
+class Timers
 {
 	private:
-		struct TimerElement *_elements;
-		byte _size;
+		struct TimerElement _elements[TIMER_ITEMS];
 		
 	public:
-		TimerPool(byte size);
-		void connect(byte slot, unsigned long interval, timerFunc func);
+		Timers(void);
+		void attach(byte slot, unsigned long interval, timerFunc func);
 		void setInterval(byte slot, unsigned long interval);
-		void update(void);
-		~TimerPool();
-};
-
-
-class LimitedTimerPool
-{
-	private:
-		struct TimerElement _elements[STATIC_SIZE];
-		
-	public:
-		LimitedTimerPool(void);
-		void connect(byte slot, unsigned long interval, timerFunc func);
-		void setInterval(byte slot, unsigned long interval);
-		void update(void);
+		void process(void);
 };
 
 #endif
