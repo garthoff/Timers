@@ -14,11 +14,11 @@ Timers	KEYWORD1
 attach	KEYWORD2
 setInterval	KEYWORD2
 process	KEYWORD2
+onTime KEYWORD2
 
 #######################################
 # Constants (LITERAL1)
 #######################################
 
 NOP LITERAL1
-TIMER_ITEMS LITERAL1
-
+NOP2 LITERAL1
