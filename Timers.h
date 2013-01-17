@@ -6,12 +6,12 @@
 typedef void (*timerFunc)(void);
 typedef void (*timerEventFunc)(byte);
 
-void NOP(void)
+void nullTimerFunc(void)
 {
   return;
 }
 
-void NOP2(byte slot)
+void nullOnTimeFunc(byte element)
 {
   return;
 }
@@ -37,25 +37,30 @@ class Timers
     {
       for (int i=0; i<TIMER_ITEMS; i++)
       {
-        _elements[i].func = NOP;
+        _elements[i].func = nullTimerFunc;
         _elements[i].interval = 0;
         _elements[i].begin_time = 0;
       }
 
-      onTime = NOP2;
+      onTime = nullOnTimeFunc;
     }
 
-    void attach(byte slot, unsigned long interval, timerFunc func)
+    void attach(byte element, unsigned long interval, timerFunc func)
     {
-      _elements[slot].func = func;
-      _elements[slot].interval = interval;
-      _elements[slot].begin_time = millis();
+      _elements[element].func = func;
+      _elements[element].interval = interval;
+      _elements[element].begin_time = millis();
     }
 
-    void setInterval(byte slot, unsigned long interval)
+    void setInterval(byte element, unsigned long interval)
     {
-      _elements[slot].interval = interval;
-      _elements[slot].begin_time = millis();
+      _elements[element].interval = interval;
+      _elements[element].begin_time = millis();
+    }
+
+    void updateInterval(byte element, unsigned long interval)
+    {
+      _elements[element].interval = interval;
     }
 
     void process(void)
