@@ -6,13 +6,14 @@
 # Datatypes (KEYWORD1)
 #######################################
 
-Timers	KEYWORD1
+Timers  KEYWORD1
 
 #######################################
 # Methods and Functions (KEYWORD2)
 #######################################
 attach	KEYWORD2
 setInterval	KEYWORD2
+updateInterval	KEYWORD2
 process	KEYWORD2
 onTime KEYWORD2
 
@@ -20,5 +21,5 @@ onTime KEYWORD2
 # Constants (LITERAL1)
 #######################################
 
-NOP LITERAL1
-NOP2 LITERAL1
+nullTimerFunc LITERAL1
+nullOnTimeFunc LITERAL1
