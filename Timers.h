@@ -1,89 +1,43 @@
-#include "Arduino.h"
-
 #ifndef timers_h
 #define timers_h
 
-typedef void (*timerFunc)(void);
-typedef void (*timerEventFunc)(byte);
+#include "Arduino.h"
+#include <inttypes.h>
 
-void nullTimerFunc(void)
-{
-  return;
-}
+typedef void (*timersFunc)(void);
 
-void nullOnTimeFunc(byte element)
+struct TimersElement
 {
-  return;
-}
-
-struct TimerElement
-{
-  timerFunc func;
-  unsigned long interval;
-  unsigned long begin_time;
+  timersFunc func;
+  uint32_t interval;
+  uint32_t last_time;
+  bool once;
+  uint8_t id;
 };
 
-
-template<byte TIMER_ITEMS>
-class Timers
+class CTimers
 {
-  private:
-    struct TimerElement _elements[TIMER_ITEMS];
-    
-  public:
-    timerEventFunc onTime;
+private:
+  struct TimersElement *_elements;
+  uint8_t _length;
 
-    Timers(void)
-    {
-      for (int i=0; i<TIMER_ITEMS; i++)
-      {
-        _elements[i].func = nullTimerFunc;
-        _elements[i].interval = 0;
-        _elements[i].begin_time = 0;
-      }
+  bool _anyId(uint8_t id);
+  uint8_t _getFreeId();
+  uint8_t _getIndex(uint8_t id);
+  uint8_t _attach(timersFunc func, uint32_t interval, bool once=false);
 
-      onTime = nullOnTimeFunc;
-    }
-
-    void attach(byte element, unsigned long interval, timerFunc func)
-    {
-      _elements[element].func = func;
-      _elements[element].interval = interval;
-      _elements[element].begin_time = millis();
-    }
-
-    void setInterval(byte element, unsigned long interval)
-    {
-      _elements[element].interval = interval;
-      _elements[element].begin_time = millis();
-    }
-
-    void updateInterval(byte element, unsigned long interval)
-    {
-      _elements[element].interval = interval;
-    }
-
-    void process(void)
-    {
-      unsigned long actual_time = millis();
-      
-      for (int i=0; i<TIMER_ITEMS; i++)
-      {
-        long long delta_time = actual_time - _elements[i].begin_time;
-        
-        if (delta_time < 0)
-        {
-          delta_time += 0xffffffff;
-          delta_time += 1;
-        }
-        if (_elements[i].interval > 0 && delta_time >= _elements[i].interval)
-        {
-          onTime(i);
-          _elements[i].func();
-          _elements[i].begin_time = actual_time;
-        }
-      }
-    }
+public:
+  CTimers();
+  ~CTimers();
+  uint8_t every(uint32_t interval, timersFunc func);
+  uint8_t after(uint32_t interval, timersFunc func);
+  bool clear(uint8_t id);
+  bool reset(uint8_t id, uint32_t interval);
+  bool update(uint8_t id, uint32_t interval);
+  uint8_t length();
+  void process();
 };
+
+extern CTimers Timers;
 
 #endif
