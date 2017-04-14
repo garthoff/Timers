@@ -1,6 +1,6 @@
 # Timers - program Arduino sterowany czasem
 
-Wersja: 16.4.0
+Wersja: 16.4.1
 
 Autor: Łukasz Tretyn, [Nettigo.pl](http://nettigo.pl)
 
