@@ -16,7 +16,7 @@ Biblioteka nie blokuje programu, tak jak funkcje `delay()` i `delayMicrosoconds(
 
 ## Instalacja biblioteki
 
-Bibliotekę należy pobrać i umieścić w katalogu libraries, który znajduje się w folderze ze szicami Arduino.
+Bibliotekę należy pobrać i umieścić w katalogu libraries, który znajduje się w folderze ze szkicami Arduino.
 
 [Strona projektu biblioteki Timers na Github](https://github.com/nettigo/Timers)
 
