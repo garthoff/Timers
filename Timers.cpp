@@ -1,51 +1,48 @@
 #include "Timers.h"
 
-void NOP(void)
+
+void Timer::restart()
 {
-	return;
+  _lastTime = millis();
 }
 
-Timers::Timers(void)
+void Timer::begin(const uint32_t interval)
 {
-	for (int i=0; i<TIMER_ITEMS; i++)
-	{
-		_elements[i].func = NOP;
-		_elements[i].interval = 0;
-		_elements[i].begin_time = 0;
-	}
+  time(interval);
+  restart();
 }
 
-void Timers::attach(byte slot, unsigned long interval, timerFunc func)
+bool Timer::available()
 {
-	_elements[slot].func = func;
-	_elements[slot].interval = interval;
-	_elements[slot].begin_time = millis();
+  if (_time == 0)
+  {
+    return false;
+  }
+
+  uint32_t actualTime = millis();
+  uint32_t deltaTime = actualTime - _lastTime;
+  if (deltaTime >= _time)
+  {
+    return true;
+  }
+
+  return false;
 }
 
-void Timers::setInterval(byte slot, unsigned long interval)
+uint32_t Timer::time()
 {
-	_elements[slot].interval = interval;
-	_elements[slot].begin_time = millis();
+  if (_time == 0)
+  {
+    return 0;
+  }
+
+  uint32_t actualTime = millis();
+  uint32_t deltaTime = actualTime - _lastTime;
+
+  return _time - deltaTime;
 }
 
-void Timers::process(void)
+void Timer::time(const uint32_t interval)
 {
-	unsigned long actual_time = millis();
-	
-	for (int i=0; i<TIMER_ITEMS; i++)
-	{
-	  long long delta_time = actual_time - _elements[i].begin_time;
-	  
-	  if (delta_time < 0)
-	  {
-	    delta_time += 0xffffffff;
-	    delta_time += 1;
-	  }
-		if (_elements[i].interval > 0 && delta_time >= _elements[i].interval)
-		{
-			_elements[i].func();
-			_elements[i].begin_time = actual_time;
-		}
-	}
+  _time = interval;
 }
-

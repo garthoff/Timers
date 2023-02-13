@@ -1,36 +1,26 @@
-#include "Arduino.h"
+#ifndef _Timers_h
+#define _Timers_h
 
-#ifndef timers_h
-#define timers_h
+#include <Arduino.h>
+#include <inttypes.h>
 
-#ifndef TIMER_ITEMS
-#define TIMER_ITEMS 8
-#endif
+#define SECS(t) (unsigned long) (t * 1000)
+#define MINS(t) SECS(t) * 60
+#define HOURS(t) MINS(t) * 60
+#define STOP 0
 
-typedef void (*timerFunc)(void);
-
-
-void NOP(void);
-
-
-struct TimerElement
+class Timer
 {
-	timerFunc func;
-	unsigned long interval;
-	unsigned long begin_time;
-};
+private:
+  uint32_t _time;
+  uint32_t _lastTime;
 
-
-class Timers
-{
-	private:
-		struct TimerElement _elements[TIMER_ITEMS];
-		
-	public:
-		Timers(void);
-		void attach(byte slot, unsigned long interval, timerFunc func);
-		void setInterval(byte slot, unsigned long interval);
-		void process(void);
+public:
+  void begin(const uint32_t);
+  void restart();
+  bool available();
+  uint32_t time();
+  void time(const uint32_t);
 };
 
 #endif
